@@ -3,19 +3,26 @@ var _=MINI._, $=MINI.$, $$=MINI.$$, EE=MINI.EE, HTML=MINI.HTML;
 var reader = new FileReader();
 
 // Array shuffler
-Array.prototype.shuffle = function() {
-  var curr = this.length;
+var shuffle = function(array) {
+  var a = array;
+  var curr = a.length;
   var temp;
   var rand;
   while (0 !== curr) {
     rand = Math.floor(Math.random() * curr);
     curr -= 1;
-    temp = this[curr];
-    this[curr] = this[rand];
-    this[rand] = temp;
+    temp = a[curr];
+    a[curr] = a[rand];
+    a[rand] = temp;
   }
-  return this;
+  return a;
 };
+
+var get = (function(obj) {
+  if(typeof obj === 'object') {
+    return Object.create(obj);
+  }
+});
 
 $(function() {
 
@@ -65,7 +72,8 @@ $(function() {
     var assignment = [];
 
     // Shuffle teams data
-    var t = data.countries.shuffle();
+    var d = get(data.countries);
+    var t = shuffle(d);
     var p = data.players;
 
     // Exit if no competitors are added
